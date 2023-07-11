@@ -5,6 +5,7 @@ import orderModel from "../models/orderModel.js";
 import fs from "fs";
 import braintree from "braintree";
 import dotenv from "dotenv";
+import { isValidObjectId } from "mongoose";
 
 //config dotenv
 dotenv.config();
@@ -19,8 +20,7 @@ const gateway = new braintree.BraintreeGateway({
 //Create Product || POST Method
 export const createProductController = async (req, res) => {
   try {
-    const { name, slug, description, price, category, quantity, shipping } =
-      req.fields;
+    const { name, description, price, category, quantity } = req.fields;
     const { photo } = req.files;
     //validation
     switch (true) {
@@ -111,18 +111,30 @@ export const singleProductController = async (req, res) => {
 //Product Photo || GET Method
 export const productPhotoController = async (req, res) => {
   try {
-    const {id} = req.params
+    const { id } = req.params;
+
+    // Check if id is valid
+    if (!id || !isValidObjectId(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid product ID",
+      });
+    }
+
     const product = await productModel.findById(id).select("photo");
-    if (product?.photo?.data) {
+
+    if (product && product.photo && product.photo.data) {
       res.set("Content-type", product.photo.contentType);
       return res.status(200).send(product.photo.data);
-    }else{res.send('Error in getting the product photo')}
+    } else {
+      return res.status(404).send("Error in getting the product photo");
+    }
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    return res.status(500).send({
       success: false,
       message: "Error while getting Product Photo",
-      error,
+      error: error.message,
     });
   }
 };

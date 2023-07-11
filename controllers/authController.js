@@ -29,13 +29,13 @@ export const registerController = async (req, res) => {
     }
 
     //check user
-    const existingUser = userModel.findOne({ email });
+    const existingUser = await userModel.findOne({ email: email });
 
-    //existing user
-    if (existingUser === true) {
+    //Check weather user exists or not
+    if (existingUser) {
       return res.status(200).send({
         success: false,
-        message: "Already registered please login",
+        message: "Already Registered Please Login",
       });
     }
 
@@ -71,32 +71,37 @@ export const registerController = async (req, res) => {
 export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
+
     //validation
     if (!email || !password) {
-      res.status(404).send({
+      return res.status(404).send({
         success: false,
         message: "Invalid Email or Password",
       });
     }
+
     //check user
     const user = await userModel.findOne({ email });
     if (!user) {
-      res.status(404).send({
+      return res.status(404).send({
         success: false,
         message: "Email is not registered",
       });
     }
+
     const match = await comparePassword(password, user.password);
     if (!match) {
-      res.status(200).send({
+      return res.status(401).send({
         success: false,
         message: "Invalid Password",
       });
     }
-    const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
+
+    const token = JWT.sign({ _id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "7d",
     });
-    res.status(200).send({
+
+    return res.status(200).send({
       success: true,
       message: "logged in successfully",
       user: {
@@ -109,9 +114,10 @@ export const loginController = async (req, res) => {
       },
       token,
     });
+    
   } catch (error) {
     console.log(error);
-    res.status(500).send({
+    return res.status(500).send({
       success: false,
       message: "Error in login",
       error,
