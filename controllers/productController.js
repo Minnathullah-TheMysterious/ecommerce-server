@@ -242,7 +242,7 @@ export const productCountController = async (req, res) => {
     console.log(error);
     res.status(400).send({
       success: false,
-      message: "Error in Count product",
+      message: "Error in Product Count",
       error,
     });
   }
