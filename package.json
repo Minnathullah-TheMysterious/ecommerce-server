@@ -1,7 +1,7 @@
 {
-  "name": "mern-stack-ecommerce-app",
+  "name": "mern_stack_e-commerce_app",
   "version": "1.0.0",
-  "description": "ecommerce rest api",
+  "description": "e-commerce rest api",
   "main": "server.js",
   "type": "module",
   "scripts": {
