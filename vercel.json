@@ -1,42 +1,18 @@
 {
-    "builds": [
+  "builds": [
       {
-        "src": "server.js",
-        "use": "@vercel/node"
+          "src": "server.js",
+          "use": "@vercel/node"
       },
       {
-        "src": "build/**",
-        "use": "@vercel/static"
+          "src": "build/**",
+          "use": "@vercel/static"
       }
-    ],
-    "routes": [
+  ],
+  "rewrites": [
       {
-        "src": "/api/v1/auth",
-        "dest": "server.js"
-      },
-      {
-        "src": "/api/v1/auth/(.*)",
-        "dest": "server.js"
-      },
-      {
-        "src": "/api/v1/category",
-        "dest": "server.js"
-      },
-      {
-        "src": "/api/v1/category/(.*)",
-        "dest": "server.js"
-      },
-      {
-        "src": "/api/v1/product",
-        "dest": "server.js"
-      },
-      {
-        "src": "/api/v1/product/(.*)",
-        "dest": "server.js"
-      },
-      {
-        "src": ".*",
-        "dest": "server.js"
+          "source": "(.*)",
+          "destination": "server.js"
       }
-    ]
-  }
+  ]
+}
