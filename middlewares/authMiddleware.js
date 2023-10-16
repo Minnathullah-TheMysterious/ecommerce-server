@@ -10,7 +10,7 @@ export const requireSignIn = (req, res, next) => {
     req.user = decode; //parsing decode in the user
     next();
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -27,11 +27,10 @@ export const isAdmin = async (req, res, next) => {
       next();
     }
   } catch (error) {
-    console.log(error);
     res.status(401).send({
       success: false,
-      error,
       message: "Error in admin middleware",
+      error:error.message,
     });
   }
 };

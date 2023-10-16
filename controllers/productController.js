@@ -51,11 +51,10 @@ export const createProductController = async (req, res) => {
       products,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Error while Creating the Product",
-      error,
+      error:error.message,
     });
   }
 };
@@ -76,11 +75,10 @@ export const getProductController = async (req, res) => {
       product,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Error in getting the products",
-      error,
+      error:error.message,
     });
   }
 };
@@ -99,11 +97,10 @@ export const singleProductController = async (req, res) => {
       product,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Error while getting a Product",
-      error,
+      error:error.message,
     });
   }
 };
@@ -130,7 +127,6 @@ export const productPhotoController = async (req, res) => {
       return res.status(404).send("Error in getting the product photo");
     }
   } catch (error) {
-    console.log(error);
     return res.status(500).send({
       success: false,
       message: "Error while getting Product Photo",
@@ -179,11 +175,10 @@ export const updateProductController = async (req, res) => {
       products,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Error while Updating the Product",
-      error,
+      error:error.message,
     });
   }
 };
@@ -198,11 +193,10 @@ export const deleteProductController = async (req, res) => {
       message: "Product Deleted Successfully",
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Error in deleting the product",
-      error,
+      error:error.message,
     });
   }
 };
@@ -221,11 +215,10 @@ export const filterProductController = async (req, res) => {
       products,
     });
   } catch (error) {
-    console.log(error);
     res.status(400).send({
       success: false,
       message: "Error in filtering Product",
-      error,
+      error:error.message,
     });
   }
 };
@@ -239,11 +232,10 @@ export const productCountController = async (req, res) => {
       total,
     });
   } catch (error) {
-    console.log(error);
     res.status(400).send({
       success: false,
       message: "Error in Product Count",
-      error,
+      error:error.message,
     });
   }
 };
@@ -264,11 +256,10 @@ export const productListController = async (req, res) => {
       products,
     });
   } catch (error) {
-    console.log(error);
     res.status(400).send({
       success: false,
       message: "Error in Listing Product based on page",
-      error,
+      error:error.message,
     });
   }
 };
@@ -287,11 +278,10 @@ export const searchProductController = async (req, res) => {
       .select("-photo");
     res.json(results);
   } catch (error) {
-    console.log(error);
     res.status(400).send({
       success: false,
       message: "Error in search product API",
-      error,
+      error:error.message,
     });
   }
 };
@@ -313,11 +303,10 @@ export const relatedProductController = async (req, res) => {
       products,
     });
   } catch (error) {
-    console.log(error);
     res.status(400).send({
       success: false,
       message: "Error in Related Product API",
-      error,
+      error:error.message,
     });
   }
 };
@@ -334,11 +323,10 @@ export const ProductCategoryController = async (req, res) => {
       products,
     });
   } catch (error) {
-    console.log(error);
     res.status(400).send({
       success: false,
       message: "Error in Product Category",
-      error,
+      error:error.message,
     });
   }
 };
@@ -355,7 +343,7 @@ export const braintreeTokenController = async (req, res) => {
       }
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 
@@ -363,14 +351,14 @@ export const braintreeTokenController = async (req, res) => {
 export const braintreePaymentController = async (req, res) => {
   try {
     const { cart, nonce } = req.body;
-    let totalAmout = 0;
+    let totalAmount = 0;
     cart.map((item) => {
-      totalAmout = totalAmout + item.price;
+      totalAmount = totalAmount + item.price;
     });
 
     gateway.transaction.sale(
       {
-        amount: totalAmout,
+        amount: totalAmount,
         paymentMethodNonce: nonce,
         options: {
           submitForSettlement: true,
@@ -392,13 +380,13 @@ export const braintreePaymentController = async (req, res) => {
         }
 
         if (result.success) {
-          console.log("Transaction ID: " + result.transaction.id);
+          console.error("Transaction ID: " + result.transaction.id);
         } else {
           console.error(result.message);
         }
       }
     );
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };

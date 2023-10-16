@@ -58,11 +58,10 @@ export const registerController = async (req, res) => {
       user,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Error in registration",
-      error,
+      error: error.message,
     });
   }
 };
@@ -116,11 +115,10 @@ export const loginController = async (req, res) => {
     });
     
   } catch (error) {
-    console.log(error);
     return res.status(500).send({
       success: false,
       message: "Error in login",
-      error,
+      error:error.message,
     });
   }
 };
@@ -161,11 +159,10 @@ export const forgotPasswordController = async (req, res) => {
       message: "Password Reset Successfully",
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Something went wrong",
-      error,
+      error:error.message,
     });
   }
 };
@@ -203,11 +200,10 @@ export const updateProfileController = async (req, res) => {
       updatedUser,
     });
   } catch (error) {
-    console.log(error);
     res.status(400).send({
       success: false,
       message: "Error in updating the user profile",
-      error,
+      error:error.message,
     });
   }
 };
@@ -221,11 +217,10 @@ export const getOrdersController = async (req, res) => {
       .populate("buyer", "name");
     res.json(orders);
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Error in getting order details",
-      error,
+      error:error.message,
     });
   }
 };
@@ -240,11 +235,10 @@ export const getAllOrdersController = async (req, res) => {
       .sort({ createdAt: -1 });
     res.json(orders);
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Error in Getting All the orders",
-      error,
+      error:error.message,
     });
   }
 };
@@ -261,11 +255,10 @@ export const orderStatusController = async (req, res) => {
     );
     res.json(orders);
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Error while updating the order status",
-      error,
+      error:error.message,
     });
   }
 };
@@ -280,10 +273,10 @@ export const allUsersController = async (req, res) => {
       users,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Error while getting all the Users",
+      error:error.message
     });
   }
 };
@@ -298,11 +291,10 @@ export const deleteUserController = async (req, res) => {
       message: "User Deleted Successfully",
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Something went wrong while deleting the account",
-      error,
+      error:error.message,
     });
   }
 };
@@ -316,11 +308,10 @@ export const usersCountController = async (req, res) => {
       totalUserCount,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Something went wrong while counting the users",
-      error,
+      error:error.message,
     });
   }
 };
@@ -340,11 +331,10 @@ export const usersListPerPageController = async (req, res) => {
       usersListPerPage,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Something went wrong while getting the users list per page",
-      error,
+      error:error.message,
     });
   }
 };
@@ -363,11 +353,10 @@ export const searchUserController = async (req, res) => {
     });
     res.json(results);
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Error in searching the user",
-      error,
+      error:error.message,
     });
   }
 };

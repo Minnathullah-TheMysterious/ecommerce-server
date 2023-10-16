@@ -27,11 +27,10 @@ export const createCategoryController = async (req, res) => {
       category,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
-      error,
       message: "Error in Creating Category",
+      error:error.message,
     });
   }
 };
@@ -70,11 +69,10 @@ export const categoryController = async (req, res) => {
       category,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Error whitle getting all categories",
-      error,
+      error:error.message,
     });
   }
 };
@@ -90,11 +88,10 @@ export const singleCategoryContoller = async (req, res) => {
       category,
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
       message: "Error while getting category",
-      error,
+      error:error.message,
     });
   }
 };
@@ -109,11 +106,10 @@ export const deleteCategoryController = async (req, res) => {
       message: "Category Deleted Successfully",
     });
   } catch (error) {
-    console.log(error);
     res.status(500).send({
       success: false,
-      error,
       message: "Error while deleting the category",
+      error:error.message,
     });
   }
 };
